@@ -20,3 +20,11 @@ These represent scenarios that are unconventional in comparison to the represent
 JustBeneathEquator tests values that are slightly south of the equator, such as –0.000001 degrees whilst JustAboveEquator tests values that are barely north of the equator, such as 0.1. These values are extremely close to the equator, within a range of only a few decimal degrees. When tested in tandem both cases help identify that the equator is correctly in place (has a latitude of zero).
 Initially, testing near the poles (90 and -90 degrees) was considered; however, due to constraints in the existing codebase, values above 90 and below -90 were not accepted as valid inputs. When attempting to test values near these boundaries, the program encountered errors that prevented meaningful testing. As a result, these pole-boundary tests were omitted from the test suite.
 
+### Edge Cases 
+If there is a SingleTrackpoint, it would be returned by default as the nearest since there is no other waypoint to compare it to. EquallyClose verifies that if two waypoints are the same exact distance from the equator then the function returns the one that comes earlier in the track. The first trackpoint is in the northern hemisphere, whereas the second trackpoint is in the southern hemisphere. Both are symmetrically placed apart from the equator 30 degrees out.  
+
+
+### Error Case 
+ZeroTrackpoints ensures that a 'std::domain_error' when the track is empty. The act step in the AAA pattern is implicitly performed within the ‘BOOST_CHECK_THROW’ macro. This is an error case and not an edge case as an error is expected to be thrown as specified within the given header comment. 
+
+ 
